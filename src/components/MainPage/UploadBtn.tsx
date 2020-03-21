@@ -6,7 +6,7 @@ export default function UploadBtn (uploadCall:Function) {
     let fileInput: React.RefObject<HTMLInputElement> = React.createRef();
     return (
         <div className='main_upload_area'>
-            <input type='file' accept='image/*' name='pic_upload' id='pic_upload' multiple ref={ fileInput } onChange={() => uploadCall(fileInput.current.files)}/>
+            <input type='file' name='pic_upload' id='pic_upload' multiple ref={ fileInput } onChange={() => uploadCall(fileInput.current.files)}/>
             <label className='upload_btn' htmlFor='pic_upload'>
                 <i className='upload_icon' />
                 <span>Upload Images</span>

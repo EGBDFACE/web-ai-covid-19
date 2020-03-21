@@ -1,4 +1,5 @@
 import React, { Component, Dispatch } from 'react';
+import axios from 'axios';
 import './MainPage.scss';
 import UploadBtn from 'src/components/MainPage/UploadBtn';
 import ProgressBar from 'src/components/MainPage/ProgressBar';
@@ -23,6 +24,7 @@ interface IStates {
     picList: IPic[];
     uploadedPer: number;
     analysisF: boolean;
+    isUploading: boolean;
 };
 
 function MainHeader () {
@@ -79,22 +81,23 @@ export default class MainPage extends Component<IProps,IStates>{
     constructor(props: IProps) {
         super(props);
         const list: IPic[] = [];
-        for (let i=0; i<20; i++) {
-            list.push({
-                fileName: i+'.jpg',
-                fileSize: 0.02,
-                fileObject: null,
-                fileResult: {
-                    type: 'Healthy',
-                    confidence: 0.9,
-                    severity: '-'
-                }
-            })
-        }
+        // for (let i=0; i<20; i++) {
+        //     list.push({
+        //         fileName: i+'.jpg',
+        //         fileSize: 0.02,
+        //         fileObject: null,
+        //         fileResult: {
+        //             type: 'Healthy',
+        //             confidence: 0.9,
+        //             severity: '-'
+        //         }
+        //     })
+        // }
         this.state = {
             picList: list,
             uploadedPer: 100,
             analysisF: false,
+            isUploading: false
         }
         this.listChange = this.listChange.bind(this);
         this.picUploadFn = this.picUploadFn.bind(this);
@@ -102,7 +105,6 @@ export default class MainPage extends Component<IProps,IStates>{
     }
 
     listChange(list: IPic[]) {
-        // console.log(list);
         this.setState({
             picList: list
         });
@@ -115,13 +117,31 @@ export default class MainPage extends Component<IProps,IStates>{
 
     picAnalysis() {
         this.setState({
-            analysisF: true
+            analysisF: true,
+            isUploading: true
+        });
+        console.log(this.state.picList);
+        let param = new FormData();
+        this.state.picList.forEach(item => {
+            param.append('dicoms', item.fileObject);
+        });
+        let config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        };
+        axios.post('http://www.elongevity.ai/api/predict', param, config).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        }).finally(() => {
+            this.setState({
+                isUploading: false
+            });
         })
     }
 
     render() {
         let wrappedComponent = null;
-        const { analysisF, picList, uploadedPer }= this.state;
+        const { analysisF, picList, uploadedPer, isUploading }= this.state;
         // const list: IPic[] = [];
         // for (let i=0; i<20; i++) {
         //     list.push({
@@ -135,6 +155,8 @@ export default class MainPage extends Component<IProps,IStates>{
         if ( picList.length === 0) { wrappedComponent = UploadBtn(this.picUploadFn); }
         else if ( uploadedPer !== 100) { wrappedComponent = ProgressBar('Uploading...', uploadedPer); }
         else { wrappedComponent = <ImageList list={picList} disable={analysisF} listFn={this.listChange} />; }
+        // 集中上传展示上传动画
+        if (isUploading) wrappedComponent = ProgressBar('Uploading...', uploadedPer);
         const startBtnSty = this.state.picList.length === 0 ? 'main_start_btn disable' : 'main_start_btn';
         return (
             <div className='main'>
@@ -147,7 +169,7 @@ export default class MainPage extends Component<IProps,IStates>{
                         onClick={this.picAnalysis}
                     >Start Analysis</button>
                 </div>
-                {AnalysisPart(picList, 'render-result',50)}
+                {/* {AnalysisPart(picList, 'render-result',50)} */}
                 <MainFooter />
             </div>
         )

@@ -14,12 +14,13 @@ interface IStates {
     wrapList: IWrapPic[];
     selectNum: number;
 }
-function ImageItem (imageObj: IWrapPic,index: number, handleSelect: Function) {
+function ImageItem (imageObj: IWrapPic, index: number, handleSelect: Function) {
+    console.log(imageObj);
     const imageSty = imageObj.fileSelect ? 'image_preview image_preview_select' : 'image_preview' ;
     const shortName = imageObj.fileName.length > 10 ? imageObj.fileName.slice(0,2)+'...'+imageObj.fileName.slice(-5) : imageObj.fileName;
     return (
         <div className='image_item' key={index}>
-            <i className={imageSty} onClick={() => handleSelect(index)}/>
+            <div className={imageSty} onClick={() => handleSelect(index)}></div>
             <p>Image {shortName} </p>
             <p>File size: {imageObj.fileSize} MB </p>
         </div>
@@ -99,7 +100,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
         return (
             <div className={ areaSty }>
                 <div className='image_list'>
-                    {wrapList.map( (value: IWrapPic,index: number) => {
+                    {wrapList.map( (value: IWrapPic, index: number) => {
                         return ImageItem(value,index,this.handleSelect);
                     })}
                 </div>
