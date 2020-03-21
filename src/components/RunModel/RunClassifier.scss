@@ -1,0 +1,99 @@
+@import 'src/views/RunModel.scss';
+
+$prefix: 'run_classifier';
+
+.model_content__#{$prefix} {
+    @extend .model_content__step_content;
+    padding: 42px 80px;
+}
+
+.run_classifier__menu {
+    margin: 24px 0 34px 0;
+}
+
+.#{$prefix}__menu__our_model {
+    display: inline-block;
+    p{
+        margin-top: 13px;
+        font-weight: 600;
+        text-align: center;
+    }
+}
+
+.our_model__btn {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0 80px;
+    border: 2px solid #000;
+    height: 90px;
+    line-height: 90px;
+}
+
+.our_model__icon {
+    vertical-align: middle;
+    display: inline-block;
+    background: url('../../styles/img/ourModel.png');
+    width: 60px;
+    height: 60px;
+    background-size: 60px 60px;
+}
+
+.#{$prefix}__menu__compare {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 50px;
+    font-weight: 600;
+    color: #444444;
+    line-height: 90px;
+}
+
+.#{$prefix}__menu__other_model{
+    display: inline-block;   
+    vertical-align: top;
+    li:last-child{
+        margin-top: 10px;
+    }
+}
+
+.other_model_btn {
+    display: inline-block;
+    text-align: center;
+    border-radius: 4px;
+    background-color: #EEEEEE;
+    border: 1px solid #666666;
+    height: 40px;
+    color: #666666;
+    font-weight: 600;
+    line-height: 40px;
+    &:nth-child(1) {
+        width: 138px;
+        margin-right: 18px;
+    }
+    &:nth-child(2) {
+        width: 200px;
+    }
+}
+
+.#{$prefix}__btn {
+    display: inline-block;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    margin-top: 24px;
+    padding: 0 54px;
+    height: 48px;
+    line-height: 48px;
+    font-weight: 600;
+    &:hover {
+        border-color: blue;
+    }
+}
+
+.#{$prefix}__icon {
+    vertical-align: middle;
+    display: inline-block;
+    background: url('../../styles/img/runModel.png');
+    width: 23px;
+    height: 22px;
+    background-size: 23px 22px;
+    margin-right: 14px;
+}

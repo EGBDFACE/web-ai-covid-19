@@ -1,0 +1,100 @@
+@import 'src/styles/global.scss';
+$prefix: 'Welcome';
+
+.#{$prefix}{
+    height: 100%;
+    width: 100%;
+    // background-color: rgba(0,0,0,0) !important;
+    color: white;
+    overflow: scroll;
+}
+.#{$prefix}_main{
+    padding-top: 40vh;
+    padding-bottom: 60vh;
+    background: url('../styles/img/deeplearning-bg.jpg') no-repeat bottom;
+    background-size: cover;
+}
+.#{$prefix}_main_title{
+    text-align: center;
+    font-size: 56px;
+    line-height: 64px;
+    font-weight: 100;
+    letter-spacing: -0.5px;
+    // font-family: 'Graphik',Helvetica,Arial,sans-serif;
+}
+.#{$prefix}_main_intro {
+    text-align: center;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 100;
+    width: 50%;
+    margin: 32px auto;
+}
+.#{$prefix}_main_button{
+    width: 50%;
+    margin: 0 auto;
+    color: #1e1e1e;
+    position: relative;
+    button{
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        background: #fcfcfc;
+        cursor: pointer;
+        display: inline-block;
+        height: 46px;
+        min-width: 136px;
+        padding: 0 32px;
+        font-size: 14px;
+        line-height: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: top .2s;
+        outline: none;
+        border-radius: $box-border-radius;
+        &:hover{
+            top: -5px;
+        }
+    }
+}
+.#{$prefix}_detail{
+    width: 50%;
+    margin: 0 auto;
+    padding: 27px 0;
+    margin-bottom: 200px;
+    blockquote{
+        font-size: 30px;
+        line-height: 130%;
+        padding: 10px 40px;
+        border: none;
+        position: relative;
+        color: #3c3c3c;
+        font-weight: 300;
+    }
+    blockquote::before{
+        font-family: "PingFang SC";
+        content: "“";
+        position: absolute;
+        top: 30px;
+        left: -30px;
+        font-size: 200px;
+        color: #e5e5e5;
+    }
+    blockquote::after{
+        font-family: "PingFang SC";
+        content: "”";
+        position: absolute;
+        bottom: 30px;
+        right: -30px;
+        font-size: 200px;
+        color: #e5e5e5;
+    }
+}
+.#{$prefix}_detail_intro{
+    strong {
+        padding: 0 10px;
+        color: #ff3a3e;
+        font-size: 180%;
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        // "module": "commonjs",
+        "module": "esnext",
+        "target": "es6",
+        "lib": ["es2015","es2017","dom"],
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            // "Constant": [
+            //     "../src/constant/*"
+            // ],
+            "src/*": [
+                "src/*"
+            ]
+            // "LoadingMask": [
+            //     "src/components/shared/Mask/LoadingMask"
+            // ]
+        }
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}

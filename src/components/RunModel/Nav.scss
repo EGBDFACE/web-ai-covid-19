@@ -1,0 +1,39 @@
+// @import 'src/styles/global.scss';
+
+$prefix: 'model';
+
+.#{$prefix}_nav{
+    padding: 55px 0 32px;
+    position: relative;
+}
+
+.#{$prefix}_nav_title {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 1.92px;
+    line-height: 40px;
+}
+
+.#{$prefix}_nav_description {
+    color: #666;
+    letter-spacing: 0.84px;
+    line-height: 40px;
+}
+
+.#{$prefix}_nav_labels {
+    @extend .#{$prefix}_nav_description;
+    font-size: 12px;
+    letter-spacing: 0.72px;
+    display: inline;
+    border-bottom: 1px solid;
+}
+
+.#{$prefix}_nav_icon {
+    position: absolute;
+    top: 55px;
+    left: -178px;
+    width: 60px;
+    height: 60px;
+    background-size: 60px 60px;
+    background-image: url('../../styles/img/logo.png');
+}

@@ -1,0 +1,98 @@
+.main_analysis {
+    width: 70%;
+    // height: 250px;
+    margin: 10px auto;
+}
+.analysis_progress {
+    width: 100%;
+    height: 250px;
+    border: 1px solid #979797;
+    background-color: #f5f5f5;
+    margin-top: 10px;  
+}
+.analysis_result {
+    width: 100%;
+    border: 1px solid #979797;
+    margin: 10px 0;
+    padding: 0.5px;
+}
+.result_header {
+    height: 30px;
+    width: 100%;
+    line-height: 30px;
+    text-align: center;
+    background-color: #eeeeee;
+    span{
+        display: inline-block;
+        width: 25%;
+    }
+}
+.result_item {
+    background-color: #f5f5f5;
+    height: 140px;
+    display: flex;
+    line-height: 140px;
+    width: 100%;
+    border-top: 1px solid #979797;
+}
+@mixin result_item_common {
+    display: inline-block;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+}
+.result_item_image {
+    @include result_item_common();
+    padding: 10px;
+    box-sizing: border-box;
+    line-height: 15px;
+    p{
+        color: #9b9b9b;
+    }
+    i{
+        display: inline-block;
+        height: 100px;
+        width: 100px;
+        background-color: #fff;
+        border: 1px solid #979797;
+    }
+}
+.result_item_type, .result_item_confidence, .result_item_severity {
+    @include result_item_common();
+}
+.result_operation {
+    position: relative;
+    // bottom: 10px;
+    // right: 20px;
+    // display: inline-block;
+    // width: 200px;
+    height: 50px;
+    background-color: #f5f5f5;
+}
+@mixin result_operation_common {
+    display: inline-block;
+    position: absolute;
+    width: 60px;
+    text-align: center;
+    cursor: pointer;
+    height: 100%;
+    i{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: #d8d8d8;
+        border: 1px solid #979797;
+    }
+    p{
+        font-size: 12px;
+    }
+    // bottom: 10px;
+}
+.result_operation_startover{
+    @include result_operation_common();
+    right: 20px;
+}
+.result_operation_download {
+    @include result_operation_common();
+    right: 80px;
+}

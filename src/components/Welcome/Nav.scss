@@ -1,0 +1,91 @@
+@import 'src/styles/global.scss';
+$prefix: 'Welcome';
+
+.#{$prefix}_main_header{
+    position: fixed;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    color: white;
+    border-bottom: none;
+    transition: background-color .4s,color .4s,transform .4s,opacity .4s ease-in-out, height .4s, border-bottom .4s;
+    -webkit-transition: background-color .4s,color .4s,transform .4s,opacity .4s ease-in-out, height .4s, border-bottom .4s;
+    -moz-transition: background-color .4s,color .4s,transform .4s,opacity .4s ease-in-out, height .4s, border-bottom .4s;
+}
+.#{$prefix}_main_header-scroll {
+    @extend .#{$prefix}_main_header;
+    background-color: white;
+    color: black;
+    height: 80px;
+    border-bottom: 1px solid #FF6B58;
+    z-index: 1;
+}
+
+.#{$prefix}_main_header__icon{
+    margin-left: 100px;
+}
+.#{$prefix}_main_header__menu{
+    margin-right: 100px;   
+}
+.#{$prefix}_main_header__menu_run{
+    display: inline-block;
+    margin: 0 20px;
+    height: 56px;
+    line-height: 56px;
+    cursor: pointer;
+    font-weight: 400;
+    letter-spacing: 1px;
+    &:hover{
+        opacity: .8;
+    }
+    button{
+        border-radius: $box-border-radius;
+        display: inline-block;
+        width: 100%;
+        height: 46px;
+        background-color: #fcfcfc;
+        padding: 0 30px;
+        // color: buttontext;
+        outline: none;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+}
+.#{$prefix}_main_header__menu_login{
+    @extend .#{$prefix}_main_header__menu_run;
+    font-weight: 600;
+    button{
+        background-color: transparent;
+        border: none;
+        color: white;
+    }
+}
+.#{$prefix}_main_header__menu_run-scroll{
+    @extend .#{$prefix}_main_header__menu_run;
+    transition: opacity .4s;
+    -webkit-transition: opacity .4s;
+    -moz-transition: opacity .4s;
+    button{
+        display: inline-block;
+        width: 100%;
+        height: 46px;
+        background-color: #262930;
+        padding: 0 30px;
+        color: #FCFCFC;
+        outline: none;
+        cursor: pointer;
+    }
+}
+.#{$prefix}_main_header__menu_login-scroll{
+    @extend .#{$prefix}_main_header__menu_login;
+    // color: #5e6573;
+    button{
+        color: black;
+    }
+}

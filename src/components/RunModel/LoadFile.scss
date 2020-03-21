@@ -1,0 +1,47 @@
+@import 'src/views/RunModel.scss';
+
+$prefix: 'model_content__load_file';
+
+.#{$prefix} {
+    @extend .model_content__step_content;
+}
+
+.load_file__upload {
+    padding: 70px 0 60px;
+    text-align: center;
+}
+
+.load_file__upload_btn {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 88px;
+    height: 54px;
+    line-height: 54px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    font-weight: 500;
+    &:hover {
+        border-color: blue;
+    }
+}
+
+.load_file__upload_icon {
+    display: inline-block;
+    margin-right: 14px;
+    vertical-align: text-bottom;
+    background: url('../../styles/img/upload.png');
+    width: 23px;
+    height: 22px;
+    background-size: 23px 22px;
+}
+
+.load_file__addition {
+    width: 360px;
+    font-size: 13px;
+    margin: auto;
+    margin-top: 28px;
+    color: #666666;
+    display: flex;
+    justify-content: space-evenly;
+}

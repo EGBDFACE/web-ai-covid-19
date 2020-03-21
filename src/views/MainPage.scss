@@ -1,0 +1,154 @@
+.main {
+    height: 100%;
+    background-color: #EEEEEE;
+    position: relative;
+    overflow: auto;
+}
+.main_header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: #D8D8D8;
+    a{
+        margin-left: 30px;
+    }
+}
+.header_icon{
+    height: 60px;
+    width: 60px;
+    background-color: #F5F5F5;
+    position: relative;
+    left: 15px;
+    display: inline-block;
+    border: 1px solid #979797;
+}
+.main_info {
+    padding: 10px 90px;
+    margin: 10px 0;
+    background-color: #E6E6E6;
+}
+.main_dialog {
+    // height: 40%;
+    height: 250px;
+    width: 70%;
+    margin: 10px auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #979797;
+    background-color: #E6E6E6;
+}
+.dialog_inner {
+    width: 100%;
+    height: 100%;
+    border: 1px dashed #979797;
+    background-color: #EEEEEE;
+}
+.dialog_info {
+    margin-left: 15%;
+    // margin-left: calc(15%-10px);
+}
+.main_start_area {
+    text-align: center;
+}
+.main_start_btn {
+    display: inline-block;
+    width: 300px;
+    height: 30px;
+    border: 1px solid #979797;
+    border-radius: 30px;
+    line-height: 30px;
+    outline: none;
+    cursor: pointer;
+}
+// .main_start_btn_disable{
+//     @extend .main_start_btn;
+//     pointer-events: none;
+//     opacity: .4;
+// }
+.main_footer {
+    // position: absolute;
+    position: relative;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+}
+.main_upload_area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    input{
+        display: none;
+    }
+}
+.upload_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: 1px solid #979797;
+    width: 180px;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.upload_icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border: 1px solid #979797;
+    background-color: #D8D8D8;
+}
+.upload_tip {
+    opacity: .4;
+}
+.main_progress_area {
+    @extend .main_upload_area;
+    position: relative;
+}
+.progress_bar {
+    width: 60%;
+    height: 20px;
+    border: 2px solid #979797;
+    background-color: #EEEEEE;
+    border-radius: 20px;
+    padding: 0 10px;
+}
+// .progress_tip {
+//     font-size: 20px;
+// }
+.main_tip {
+    position: absolute;
+    bottom: 10px;
+    color: #9b9b9b;
+}
+@-webkit-keyframes progress_bar_stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+@keyframes progress_bar_stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+.progress_inner {
+    height: 100%;
+    background-color: #979797;
+    background-image: linear-gradient(90deg,
+    #EEEEEE 25%, transparent 25%, transparent 50%,
+    #EEEEEE 50%, 
+    #EEEEEE 75%, transparent 75%, transparent);
+    animation: progress_bar_stripes 2s linear infinite;
+    -webkit-animation: progress_bar_stripes 2s linear infinite;
+    background-size: 40px;
+}
