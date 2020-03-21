@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IPic, fileHandle } from 'src/views/MainPage';
+import ImageItem from 'src/components/MainPage/ImageItem';
 import './ImageList.scss';
 
 interface IWrapPic extends IPic {
@@ -13,18 +14,6 @@ interface IProps {
 interface IStates {
     wrapList: IWrapPic[];
     selectNum: number;
-}
-function ImageItem (imageObj: IWrapPic, index: number, handleSelect: Function) {
-    console.log(imageObj);
-    const imageSty = imageObj.fileSelect ? 'image_preview image_preview_select' : 'image_preview' ;
-    const shortName = imageObj.fileName.length > 10 ? imageObj.fileName.slice(0,2)+'...'+imageObj.fileName.slice(-5) : imageObj.fileName;
-    return (
-        <div className='image_item' key={index}>
-            <div className={imageSty} onClick={() => handleSelect(index)}></div>
-            <p>Image {shortName} </p>
-            <p>File size: {imageObj.fileSize} MB </p>
-        </div>
-    )
 }
 
 export default class ImageList extends React.Component<IProps, IStates> {
@@ -101,7 +90,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
             <div className={ areaSty }>
                 <div className='image_list'>
                     {wrapList.map( (value: IWrapPic, index: number) => {
-                        return ImageItem(value,index,this.handleSelect);
+                        return <ImageItem imageObj={value} index={index} handleSelect={this.handleSelect.bind(this)}></ImageItem>
                     })}
                 </div>
                 <div className='image_list_operation'>
