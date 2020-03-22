@@ -3,9 +3,11 @@ import { IPic, fileHandle } from 'src/views/MainPage';
 import * as cornerstone from 'cornerstone-core';
 import * as cornerstoneFileImageLoader from 'cornerstone-file-image-loader';
 import './ImageItem.scss';
+declare const window: any;
 interface IWrapPic extends IPic {
     fileSelect: boolean;
 }
+
 interface ItemProps {
     imageObj: IWrapPic;
     index: number;
@@ -27,7 +29,7 @@ export default class ImageItem extends React.Component<ItemProps> {
         cornerstone.enable(element);
         var index = cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObject);
         var imageId = "dicomfile://" + index;
-        cornerstone.loadImage(imageId).then(function(image) {
+        cornerstone.loadImage(imageId).then(function(image: any) {
             cornerstone.displayImage(element, image);
         });
     }
