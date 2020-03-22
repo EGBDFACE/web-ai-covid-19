@@ -90,7 +90,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
             <div className={ areaSty }>
                 <div className='image_list'>
                     {wrapList.map( (value: IWrapPic, index: number) => {
-                        return <ImageItem imageObj={value} index={index} handleSelect={this.handleSelect.bind(this)}></ImageItem>
+                        return <ImageItem key={index} imageObj={value} index={index} handleSelect={this.handleSelect.bind(this)}></ImageItem>
                     })}
                 </div>
                 <div className='image_list_operation'>
