@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { IPic, fileHandle } from 'src/views/MainPage';
 import './ImageItem.scss';
+declare const window: any;
 interface IWrapPic extends IPic {
     fileSelect: boolean;
 }
+
 interface ItemProps {
     imageObj: IWrapPic;
     index: number;
@@ -22,10 +24,12 @@ export default class ImageItem extends React.Component<ItemProps> {
 
     componentDidMount() {
         const element = this.refs.imagePreview;
-        window.cornerstone.enable(element);
-        var index = window.cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObject);
+        const cornerstone = window.cornerstone;
+        const cornerstoneFileImageLoader = window.cornerstoneFileImageLoader;
+        cornerstone.enable(element);
+        var index = cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObject);
         var imageId = "dicomfile://" + index;
-        cornerstone.loadImage(imageId).then(function(image) {
+        cornerstone.loadImage(imageId).then(function(image: any) {
             cornerstone.displayImage(element, image);
         });
     }
