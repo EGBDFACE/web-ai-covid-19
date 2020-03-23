@@ -5,6 +5,10 @@ import UploadBtn from 'src/components/MainPage/UploadBtn';
 import ProgressBar from 'src/components/MainPage/ProgressBar';
 import ImageList from 'src/components/MainPage/ImageList';
 import AnalysisPart from 'src/components/MainPage/AnalysisPart';
+import { IStoreState } from 'src/redux/reducer';
+import * as welcomeReducer from 'src/views/WelcomeRedux';
+import { connect } from 'react-redux';
+import Footer from 'src/layouts/Footer';
 
 interface IPicResult {
     type: string;
@@ -14,11 +18,11 @@ interface IPicResult {
 export interface IPic {
     fileName: string,
     fileSize: number,
-    fileObject: any,
+    fileObj: any,
     fileResult: IPicResult,
 }
 interface IProps {
-
+    fileList: IPic[];
 };
 interface IStates {
     picList: IPic[];
@@ -30,8 +34,8 @@ interface IStates {
 function MainHeader () {
     return (
         <div className='main_header'>
-            <div className='header_icon' />
-            <a href='./'>AI-COVID-19</a>
+            <i/>
+            <h1>AI-COVID-19</h1>
         </div>
     )
 }
@@ -45,12 +49,10 @@ function MainInfo () {
     )
 }
 
-function MainDialog (WrappedComponent: any) {
+function MainDialog (WrappedComponent: any,header: string) {
     return (
         <div className='main_dialog'>
-            <div className='dialog_inner'>
-                {WrappedComponent}
-            </div>
+            <div className='main_dialog_header'>{header}</div>
         </div>
     )
 }
@@ -70,29 +72,26 @@ export function fileHandle (value: any) {
         list.push({
             fileName: value[`${i}`].name,
             fileSize: Number((value[`${i}`].size/(1024*1024)).toFixed(2)),
-            fileObject: value[`${i}`],
+            fileObj: value[`${i}`],
             fileResult: undefined
         })
     }
     return list;
 }
-export default class MainPage extends Component<IProps,IStates>{
+
+function mainPicList (list: IPic[]) {
+    return (
+        <div className='main_list'>
+            <div className='main_list_header'>UPLOAD CT IMAGES</div>
+            <ImageList list={list} listFn={() => {return;}} disable={false}/>
+        </div>
+    )
+}
+class MainPage extends Component<IProps,IStates>{
     // public fileInput: React.RefObject<HTMLInputElement>;
     constructor(props: IProps) {
         super(props);
         const list: IPic[] = [];
-        // for (let i=0; i<20; i++) {
-        //     list.push({
-        //         fileName: i+'.jpg',
-        //         fileSize: 0.02,
-        //         fileObject: null,
-        //         fileResult: {
-        //             type: 'Healthy',
-        //             confidence: 0.9,
-        //             severity: '-'
-        //         }
-        //     })
-        // }
         this.state = {
             picList: list,
             uploadedPer: 100,
@@ -123,7 +122,7 @@ export default class MainPage extends Component<IProps,IStates>{
         console.log(this.state.picList);
         let param = new FormData();
         this.state.picList.forEach(item => {
-            param.append('dicoms', item.fileObject);
+            param.append('dicoms', item.fileObj);
         });
         let config = {
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -140,8 +139,8 @@ export default class MainPage extends Component<IProps,IStates>{
     }
 
     render() {
-        let wrappedComponent = null;
-        const { analysisF, picList, uploadedPer, isUploading }= this.state;
+        // let wrappedComponent = null;
+        // const { analysisF, picList, uploadedPer, isUploading }= this.state;
         // const list: IPic[] = [];
         // for (let i=0; i<20; i++) {
         //     list.push({
@@ -152,17 +151,18 @@ export default class MainPage extends Component<IProps,IStates>{
         //     })
         // }
         // let wrappedComponent = <ImageList list={list} disable={false} listFn={this.listChange}/> ;
-        if ( picList.length === 0) { wrappedComponent = UploadBtn(this.picUploadFn); }
-        else if ( uploadedPer !== 100) { wrappedComponent = ProgressBar('Uploading...', uploadedPer); }
-        else { wrappedComponent = <ImageList list={picList} disable={analysisF} listFn={this.listChange} />; }
+        // if ( picList.length === 0) { wrappedComponent = UploadBtn(this.picUploadFn); }
+        // else if ( uploadedPer !== 100) { wrappedComponent = ProgressBar('Uploading...', uploadedPer); }
+        // else { wrappedComponent = <ImageList list={picList} disable={analysisF} listFn={this.listChange} />; }
         // 集中上传展示上传动画
-        if (isUploading) wrappedComponent = ProgressBar('Uploading...', uploadedPer);
-        const startBtnSty = this.state.picList.length === 0 ? 'main_start_btn disable' : 'main_start_btn';
+        // if (isUploading) wrappedComponent = ProgressBar('Uploading...', uploadedPer);
+        // const startBtnSty = this.state.picList.length === 0 ? 'main_start_btn disable' : 'main_start_btn';
         return (
             <div className='main'>
                 <MainHeader />
-                <MainInfo />
-                {MainDialog(wrappedComponent)}
+                {mainPicList(this.props.fileList)}
+                {/* <MainInfo /> */}
+                {/* {MainDialog(wrappedComponent)}
                 <span className='dialog_info'>* Maximum: 50 images</span>
                 <div className='main_start_area'>
                     <button className={ startBtnSty }
@@ -170,8 +170,21 @@ export default class MainPage extends Component<IProps,IStates>{
                     >Start Analysis</button>
                 </div>
                 {/* {AnalysisPart(picList, 'render-result',50)} */}
-                <MainFooter />
+                {/* <MainFooter /> */} 
+                <Footer />
             </div>
         )
     }
 }
+function mapStateToProps (state: IStoreState) {
+    return {
+        fileList: state.welcome.fileList
+    }
+}
+function mapDispatchToProps (dispatch: Dispatch<any>) {
+    return {
+        uploaderMore: (v: IPic) => dispatch(welcomeReducer.actionCreator(welcomeReducer.UPLOAD_MORE, v)),
+        clearAll: () => dispatch(welcomeReducer.actionCreator(welcomeReducer.CLEAR_ALL))
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(MainPage);

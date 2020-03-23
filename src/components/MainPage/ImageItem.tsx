@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { IPic, fileHandle } from 'src/views/MainPage';
 import './ImageItem.scss';
-// import * as cornerstone from 'cornerstone-core';
-const cornerstone = require('cornerstone-core');
-const cornerstoneFileImageLoader = require('cornerstone-file-image-loader');
 
-interface IWindow {
-    cornerstone: any;
-    cornerstoneFileImageLoader: any;
-}
+declare const window: any;
+
 interface IWrapPic extends IPic {
     fileSelect: boolean;
 }
@@ -30,16 +25,16 @@ export default class ImageItem extends React.Component<ItemProps> {
 
     componentDidMount() {
         const element = this.refs.imagePreview;
-        let window: IWindow;
-        // window.cornerstone.enable(element);
-        // var index = window.cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObject);
-        cornerstone.enable(element);
-        console.log(cornerstone);
-        console.log(cornerstoneFileImageLoader);
-        let index = cornerstoneFileImageLoader.loadImage(this.props.imageObj.fileObject);
+        window.cornerstone.enable(element);
+        var index = window.cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObj);
+        // cornerstone.enable(element);
+        // console.log(cornerstone);
+        // console.log(cornerstoneFileImageLoader);
+        // console.log(this.props.imageObj);
+        // let index = cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObj);
         var imageId = "dicomfile://" + index;
-        cornerstone.loadImage(imageId).then(function(image: any) {
-            cornerstone.displayImage(element, image);
+        window.cornerstone.loadImage(imageId).then(function(image: any) {
+            window.cornerstone.displayImage(element, image);
         });
     }
 

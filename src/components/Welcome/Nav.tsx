@@ -7,6 +7,7 @@ export default function WelcomeNav ()  {
     return (
         <div className='welcome_nav'>
             <div className='nav_topic'>
+                <i className='nav_label' />
                 <h1>AI-COVID-19</h1>
                 <p>A collaborative online AI engine for precise CT-based COVID-19 diagnosis.</p>
             </div>

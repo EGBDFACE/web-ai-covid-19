@@ -15,6 +15,6 @@ export const store = configureStore();
 ReactDOM.render((
     <Provider store={store}>
         {routes}
-        {/* <DevTools /> */}
+        <DevTools />
     </Provider>
 ), document.getElementById('root'))

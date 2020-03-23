@@ -65,7 +65,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
                 const newList: IPic[] = wrapList.filter(v => !v.fileSelect).map( v => {
                     return {
                         fileName: v.fileName,
-                        fileObject: v.fileObject,
+                        fileObj: v.fileObj,
                         fileSize: v.fileSize,
                         fileResult: v.fileResult
                     }

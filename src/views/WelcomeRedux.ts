@@ -2,96 +2,79 @@
 import { combineReducers } from 'redux';
 
 // 引入 reducer 及 actionCreator
-import login , { ILoginState } from 'src/components/Welcome/LoginRedux';
+// import login , { ILoginState } from 'src/components/Welcome/LoginRedux';
 
 // TODO: can not export it at the same time
 // import * as loginAction from 'src/components/Welcome/LoginRedux';
-export interface IDisplayState {
-    isLoginDialog: boolean,
-    isScrollTop: boolean,
+// export interface IDisplayState {
+//     isLoginDialog: boolean,
+//     isScrollTop: boolean,
+// }
+// export interface IWelcomeState {
+//     displayState: IDisplayState,
+//     login: ILoginState
+// }
+export interface IFileItem {
+    fileName: string;
+    fileSize: number;
+    fileObj: any;
+    fileResult: any;
 }
-export interface IWelcomeState {
-    displayState: IDisplayState,
-    login: ILoginState
+export interface IFileState {
+    uploadState: string;
+    fileList: IFileItem[];
+}
+// const initialState: IDisplayState = {
+//     isLoginDialog: false,
+//     isScrollTop: true
+// }
+const initialState: IFileState = {
+    uploadState: 'begin',
+    fileList: []
 }
 
-const initialState: IDisplayState = {
-    isLoginDialog: false,
-    isScrollTop: true
+export function actionCreator(type: string, payload?: any) {
+    return {
+        type,
+        payload
+    }
 }
-
 // export const LOGIN_DIALOG_SHOW = 'LOGIN_DIALOG_SHOW';
 // export const LOGIN_DIALOG_HIDDEN = 'LOGIN_DIALOG_HIDDEN';
 // export const WELCOME_SCROLL_TOP = 'SCROLL_TOP';
 // export const WELCOME_SCROLL_NOT_TOP = 'SCROLL_NOT_TOP';
 
-export const LOGIN_DIALOG = 'LOGIN_DIALOG';
-export const WELCOME_SCROLL = 'WELCOME_SCROLL';
-// function loginDialogShow () {
-//     return {
-//         type: LOGIN_DIALOG_SHOW
-//     }
-// }
-// function loginDialogHidden () {
-//     return {
-//         type: LOGIN_DIALOG_HIDDEN
-//     }
-// }
-// function welcomeScrollTop () {
-//     return {
-//         type: WELCOME_SCROLL_TOP
-//     }
-// }
-// function welcomeScrollNotTop () {
-//     return {
-//         type: WELCOME_SCROLL_NOT_TOP
-//     }
-// }
-export function actionCreator (actionType: String, value: boolean) {
-    return {
-        type: actionType,
-        payload: value
-    }
-}
+export const START_UPLOAD = 'START_UPLOAD';
+export const UPLOAD_MORE = 'UPLOAD_MORE';
+export const CLEAR_ALL = 'CLEAR_ALL';
+export const START_ANALYSIS = 'START_ANALYSIS';
 
-function displayState (state = initialState, action: any) {
+export function fileReducer (state = initialState, action: any) {
     switch ( action.type ) {
-        case 'LOGIN_DIALOG': {
+        case 'START_UPLOAD': {
             return {
-                ...state,
-                isLoginDialog: action.payload
+                uploadState: 'start-upload',
+                fileList: action.payload
             }
         }
-        case 'WELCOME_SCROLL': {
+        case 'UPLOAD_MORE': {
             return {
                 ...state,
-                isScrollTop: action.payload
+                fileList: action.payload
             }
         }
-        // case 'LOGIN_DIALOG_SHOW': {
-        //     return {
-        //         ...state,
-        //         isLoginDialog: true,
-        //     }
-        // }
-        // case 'LOGIN_DIALOG_HIDDEN': {
-        //     return {
-        //         ...state,
-        //         isLoginDialog: false
-        //     }
-        // }
-        // case 'WELCOME_SCROLL_TOP': {
-        //     return {
-        //         ...state,
-        //         isScrollTop: true
-        //     }
-        // }
-        // case 'WELCOME_SCROLL_NOT_TOP': {
-        //     return {
-        //         ...state,
-        //         isScrollTop: false
-        //     }
-        // }
+        case 'CLEAR_ALL': {
+            return {
+                uploadState: 'begin',
+                fileList: []
+            }
+        }
+        case 'START_ANALYSIS': {
+            return {
+                ...state,
+                uploadState: 'start-analysis'
+            }
+        }
         default: return state;
     }
 }
@@ -99,8 +82,8 @@ function displayState (state = initialState, action: any) {
 // export default combineReducers({
 //     login,
 // });
-export const welcomeReducer = combineReducers({
-    login,
-    displayState
-});
+// export const welcomeReducer = combineReducers({
+//     login,
+//     displayState
+// });
 
