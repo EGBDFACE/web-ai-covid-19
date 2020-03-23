@@ -3,6 +3,7 @@ import { IPic, fileHandle } from 'src/views/MainPage';
 import './ImageItem.scss';
 // import * as cornerstone from 'cornerstone-core';
 const cornerstone = require('cornerstone-core');
+const cornerstoneFileImageLoader = require('cornerstone-file-image-loader');
 
 interface IWindow {
     cornerstone: any;
@@ -34,7 +35,8 @@ export default class ImageItem extends React.Component<ItemProps> {
         // var index = window.cornerstoneFileImageLoader.addFile(this.props.imageObj.fileObject);
         cornerstone.enable(element);
         console.log(cornerstone);
-        let index = cornerstone.fileImageLoader.addFile(this.props.imageObj.fileObject);
+        console.log(cornerstoneFileImageLoader);
+        let index = cornerstoneFileImageLoader.loadImage(this.props.imageObj.fileObject);
         var imageId = "dicomfile://" + index;
         cornerstone.loadImage(imageId).then(function(image: any) {
             cornerstone.displayImage(element, image);

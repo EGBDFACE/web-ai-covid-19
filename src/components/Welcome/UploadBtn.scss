@@ -1,0 +1,44 @@
+.welcome_upload_area {
+    height: 50%;
+    padding: 0 8% 8% 8%;
+    box-sizing: border-box;
+}
+.welcome_upload_div {
+    height: 100%;
+    padding: 0 8%;
+    // border: 1px solid #304f7d;
+    border-radius: 30px;
+    // background: linear-gradient(180deg, #F2FFFFFF, #2686F7FF);
+    // background: linear-gradient(180deg, #80FFFFFF, #FFFFFF);
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.40) 0%, #FFFFFF 100%);
+    border: 2px solid #304F7D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    input {
+        display: none;
+    }
+}
+.welcome_upload_btn {
+    height: 30px;
+    border-radius: 30px;
+    padding: 0 30px;
+    font-size: 16px;
+    line-height: 30px;
+    color: #FFFFFF;
+    background: #304f7d;
+    cursor: pointer;
+}
+.welcome_upload_tip {
+    color: #505050;
+    margin-top: 10px;
+}
+.welcome_upload_info {
+    font-size: 12px;
+    color: #505050;
+    text-align: center;
+    p{
+        margin: 8px 0;
+    }
+} 

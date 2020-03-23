@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 // import { push } from 'react-router-redux';
 import { push } from 'connected-react-router';
 import Footer from 'src/layouts/Footer';
-import Login from 'src/components/Welcome/Login';
+// import Login from 'src/components/Welcome/Login';
 import Nav from 'src/components/Welcome/Nav';
+import UploadBtn from 'src/components/Welcome/UploadBtn';
 import { IStoreState } from 'src/redux/reducer';
 import * as welcomeReducer from 'src/views/WelcomeRedux';
 import './Welcome.scss';
@@ -12,11 +13,10 @@ import './Welcome.scss';
 
 interface IProps {
     goto: (value: string) => void,
-    isLogin: boolean;
-    // isLoginDialog: boolean,
-    isScrollTop: boolean,
-    loginDialog: (value: boolean) => void,
-    welcomeScroll: (value: boolean) => void
+    // isLogin: boolean;
+    // isScrollTop: boolean,
+    // loginDialog: (value: boolean) => void,
+    // welcomeScroll: (value: boolean) => void
 }
 interface IStates {
     // isLoginDialog: boolean,
@@ -72,29 +72,29 @@ class Welcome extends Component<IProps,IStates> {
             // isLoginDialog: false,
             // isTop: true,
         };
-        this.handleWelcomeScroll = this.handleWelcomeScroll.bind(this);
-        this.handleRunClick = this.handleRunClick.bind(this);
+        // this.handleWelcomeScroll = this.handleWelcomeScroll.bind(this);
+        // this.handleRunClick = this.handleRunClick.bind(this);
     }
 
-    handleWelcomeScroll (e: any) {
-        const scrollTop: Number = e.target.scrollTop;
-        const isTop = this.props.isScrollTop;
-        const submitTopChange = this.props.welcomeScroll;
-        if (scrollTop > 5 && isTop) {
-            submitTopChange(false);
-        } else if (scrollTop === 0 && !isTop) {
-            submitTopChange(true);
-        }
-    }
+    // handleWelcomeScroll (e: any) {
+    //     const scrollTop: Number = e.target.scrollTop;
+    //     const isTop = this.props.isScrollTop;
+    //     const submitTopChange = this.props.welcomeScroll;
+    //     if (scrollTop > 5 && isTop) {
+    //         submitTopChange(false);
+    //     } else if (scrollTop === 0 && !isTop) {
+    //         submitTopChange(true);
+    //     }
+    // }
 
-    handleRunClick () {
-        const { isLogin, loginDialog } = this.props;
-        if (!isLogin) {
-            loginDialog(true);
-        } else {
-            // store 控制路由 页面跳转
-        }
-    }
+    // handleRunClick () {
+    //     const { isLogin, loginDialog } = this.props;
+    //     if (!isLogin) {
+    //         loginDialog(true);
+    //     } else {
+    //         // store 控制路由 页面跳转
+    //     }
+    // }
 
     // UNSAFE_componentWillReceiveProps(newProps: IProps) {
     //     console.log(newProps.isLogin);
@@ -107,39 +107,11 @@ class Welcome extends Component<IProps,IStates> {
     // }
 
     render() {
-        const NavProps = {
-            // isLogin: false,
-            // isTop: true,
-            prefix: 'Welcome',
-        };
-        // const LoginProps = {
-        //     isDisplay: false
-        // }
-        const FooterProps = {
-            location: '/',
-        };
         return (
-            <div className='Welcome' onScroll={this.handleWelcomeScroll}>
-                <Nav {...NavProps} />
-                <Login />
-                <div className='Welcome_main'>
-                    <p className='Welcome_main_title'>A Superior Cancer Classifier</p>
-                    <p className='Welcome_main_intro'>for precisely predicting the classification 
-                        of 12 cancer types : CESC LUAD BRCA PAAD ACC KIRP STAD PRAD UCS HNSC BLCA LGG</p>
-                    <div className='Welcome_main_button'>
-                        <button onClick={this.handleRunClick}>RUN CLASSIFICATION</button>
-                    </div>
-                </div>
-                <div className='Welcome_detail'>
-                    <blockquote>
-                        <p className='Welcome_detail_intro'>The model is empowered by 
-                            <strong>deep learning approach</strong> 
-                            and comprehensive variant 
-                            <strong>pathogenicity predictor</strong>.
-                        </p>
-                    </blockquote>
-                </div>
-                <Footer {...FooterProps}/>
+            <div className='welcome'>
+                <Nav />
+                <UploadBtn />
+                <Footer />
             </div>
         )
     }
@@ -149,16 +121,16 @@ class Welcome extends Component<IProps,IStates> {
 function mapStateToProps ( state: IStoreState ) {
     return {
         // isLoginDialog: state.welcome.displayState.isLoginDialog,
-        isLogin: state.welcome.login.isLogined,
-        isScrollTop: state.welcome.displayState.isScrollTop
+        // isLogin: state.welcome.login.isLogined,
+        // isScrollTop: state.welcome.displayState.isScrollTop
     }
 }
 
 function mapDispatchToProps (dispatch: Dispatch<any> ) {
     return {
         goto: (value: string) => dispatch(push(value)),
-        loginDialog: (value: boolean) => dispatch(welcomeReducer.actionCreator(welcomeReducer.LOGIN_DIALOG, value)),
-        welcomeScroll: (value: boolean) => dispatch(welcomeReducer.actionCreator(welcomeReducer.WELCOME_SCROLL, value))
+        // loginDialog: (value: boolean) => dispatch(welcomeReducer.actionCreator(welcomeReducer.LOGIN_DIALOG, value)),
+        // welcomeScroll: (value: boolean) => dispatch(welcomeReducer.actionCreator(welcomeReducer.WELCOME_SCROLL, value))
     }
 }
 

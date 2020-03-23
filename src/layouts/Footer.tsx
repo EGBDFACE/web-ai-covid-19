@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Footer.scss';
 
 interface IProps {
-	location: any
+	// location: any
 }
 
 interface IStates { }
@@ -13,15 +13,13 @@ export default class Footer extends Component<IProps, IStates> {
 	}
 
 	render() {
-        const centerStyle = { justifyContent : 'center' };
-        const isCenter = this.props.location.pathname === '/model';
+        // const centerStyle = { justifyContent : 'center' };
+        // const isCenter = this.props.location.pathname === '/model';
         return (
-            <footer>
-                <div className="footer" style ={isCenter ? centerStyle : null}>
-                    <p className="copyright" >&copy; {new Date().getFullYear()}
-                    </p>
-                </div>
-            </footer>
+            <div className="footer">
+                <p>Copyright &copy; Huazhong University of Science and Technology. All rights reserved. </p>
+                <p>Contact isutian@gmail.com for the international collaboration of AI engine.</p> 
+            </div>
         )
 	}
 }

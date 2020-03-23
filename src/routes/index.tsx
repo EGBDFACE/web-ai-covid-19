@@ -4,7 +4,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 // import LoadingMask from 'src/components/shared/Mask/LoadingMask';
 import { ConnectedRouter } from 'connected-react-router';
 import browserHistory from 'src/routes/history';
-// import Welcome from 'src/views/Welcome';
+import Welcome from 'src/views/Welcome';
 // import RunModel from 'src/views/RunModel';
 import MainPage from 'src/views/MainPage';
 
@@ -48,9 +48,9 @@ import MainPage from 'src/views/MainPage';
 export default (
     <ConnectedRouter history={browserHistory}>
         <Switch>
-            {/* <Route exact path='/' component={Welcome} />
-            <Route path='/model' component={RunModel} /> */}
-            <Route path='/' component={MainPage} />
+            <Route exact path='/' component={Welcome} />
+            {/* <Route path='/model' component={RunModel} /> */}
+            <Route path='/main' component={MainPage} />
         </Switch>
     </ConnectedRouter>
 )
