@@ -12,7 +12,8 @@ body,html{
     "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
     height: 100%;
-    width: 100%;
+	width: 100%;
+	overflow: auto;
     // overflow: hidden;
 	// overflow: auto;
 	// overflow: scroll;
@@ -53,6 +54,7 @@ h2 {
 #root {
     height: 100%;
 	width: 100%;
+	overflow: auto;
 	// overflow: scroll;
 }
 

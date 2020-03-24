@@ -1,6 +1,7 @@
 .main {
     width: 100%;
     height: 100%;
+    overflow: auto;
     // background: linear-gradient(161deg, #D8E3E1, #B2505050);   
     background-image: linear-gradient(160deg, #D8E3E1 4%, rgba(80,80,80,0.17) 100%);
 }
@@ -26,7 +27,8 @@
     border-radius: 20px;
     height: 400px;
     margin: 0 8%;
-    border: 1px solid #304f7d;      
+    border: 1px solid #304f7d;   
+    position: relative;   
 }
 .main_list_header {
     color: #eeeeee;
@@ -35,4 +37,93 @@
     padding-left: 8%;
     border-radius: 20px 20px 0 0;
     background: linear-gradient(172deg, #304F7D, #E3E3E3);
+}
+.main_list_operation {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    padding: 0 8%;
+    bottom: -25px;
+    box-sizing: border-box;
+    input {
+        display: none;
+    }
+}
+@mixin main_list_operation_common {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 40px;
+    text-align: center;
+    padding: 0 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.main_list_clear, .main_list_upload_more {
+    @include main_list_operation_common();
+    color: #304F7D;
+    border: 1px solid #304f7d;
+    background: linear-gradient(180deg, #FFFFFF, #FFFFFF);
+} 
+.main_list_analysis {
+    @include main_list_operation_common();
+    position: absolute;
+    right: 8%;
+    color: #F6F7F7;
+    background: linear-gradient(90deg, #304F7D, #DBDBDB);
+}
+.main_result_list {
+    @extend .main_list;
+    height: 200px;
+    margin-top: 60px;
+}
+.main_result_header {
+    color: #102646;
+    padding: 0 8%;
+    margin: 10px 0;
+    // display: flex;
+    // justify-content: space-between;
+    span {
+        display: inline-block;
+        width: 33%;
+        text-align: center;
+    }
+}
+.result_header_image {
+    text-align: left !important;
+}
+.result_header_confidence {
+    text-align: right !important;
+}
+@mixin result_item {
+    display: inline-block;
+    width: 33%;
+}
+.main_result_content {
+    height: 120px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    .image_item {
+        @include result_item();
+        box-sizing: border-box;
+        padding-top: 25px;
+        text-align: left;
+    }
+    .type_info {
+        @include result_item();
+        text-align: center;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 10px;
+    }
+    .confidence_info {
+        @include result_item();
+        color: #333333;
+        text-align: right;
+        box-sizing: border-box;
+        padding-right: 35px;
+    }
 }

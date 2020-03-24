@@ -16,11 +16,11 @@ interface ItemProps {
 export default class ImageItem extends React.Component<ItemProps> {
     constructor(props: ItemProps){
         super(props);
-        console.log(props);
+        // console.log(props);
     }
 
     handleSelect(index: number) {
-        this.props.handleSelect.bind(this, index);
+        // this.props.handleSelect.bind(this, index);
     }
 
     componentDidMount() {

@@ -2,13 +2,20 @@ import React, { Component, Dispatch } from 'react';
 import axios from 'axios';
 import './MainPage.scss';
 import UploadBtn from 'src/components/MainPage/UploadBtn';
-import ProgressBar from 'src/components/MainPage/ProgressBar';
+// import ProgressBar from 'src/components/MainPage/ProgressBar';
+import Progress from 'src/components/shared/ProgressBar';
 import ImageList from 'src/components/MainPage/ImageList';
 import AnalysisPart from 'src/components/MainPage/AnalysisPart';
 import { IStoreState } from 'src/redux/reducer';
 import * as welcomeReducer from 'src/views/WelcomeRedux';
+import { IFileResult } from 'src/views/WelcomeRedux';
 import { connect } from 'react-redux';
 import Footer from 'src/layouts/Footer';
+import { TYPES,BASE_URL } from 'src/utils/constant';
+import { push } from 'connected-react-router';
+import { resFileHandle } from 'src/utils/fileHandle';
+
+declare const window: any;
 
 interface IPicResult {
     type: string;
@@ -23,11 +30,18 @@ export interface IPic {
 }
 interface IProps {
     fileList: IPic[];
+    fileResult: IFileResult;
+    stepState: string;
+    uploadMore?: (v: IPic[]) => void;
+    clearAll?: () => void;
+    goto?: (v: string) => void;
+    setFileResult?: (v:IFileResult) => void;
+    startAnalysis?: () => void;
 };
 interface IStates {
-    picList: IPic[];
+    // picList: IPic[];
     uploadedPer: number;
-    analysisF: boolean;
+    // analysisF: boolean;
     isUploading: boolean;
 };
 
@@ -79,112 +93,208 @@ export function fileHandle (value: any) {
     return list;
 }
 
-function mainPicList (list: IPic[]) {
+function mainOperation(list: IPic[], uploadMore: Function, clearAll: Function, picAnalysis: Function, analysisTip: string) {
+    const uploadMoreRef: React.RefObject<HTMLInputElement> = React.createRef();
     return (
-        <div className='main_list'>
-            <div className='main_list_header'>UPLOAD CT IMAGES</div>
-            <ImageList list={list} listFn={() => {return;}} disable={false}/>
+        <div className='main_list_operation'>
+            <div className='main_list_clear' 
+                onClick={() => clearAll()}>Clear All</div> 
+            <input type='file'
+                name='list_upload_more'
+                id='list_upload_more'
+                multiple
+                ref={uploadMoreRef}
+                onChange={() => uploadMore(list.concat(fileHandle(uploadMoreRef.current.files)))}
+            />
+            <label className='main_list_upload_more'
+                htmlFor='list_upload_more'
+            >Upload More</label>
+            <div className='main_list_analysis' 
+                onClick={() => picAnalysis()}>{analysisTip}</div>
+        </div>
+    )
+} 
+function mainUploadingProcess(uploadedPer: number) {
+    return(
+        <div className='main_list_operation'>
+            {Progress(uploadedPer,'ANALYSISING')}
         </div>
     )
 }
+class MainResult extends Component<IProps,null>{
+    constructor(props: IProps){
+        super(props);
+    }
+
+    componentDidMount() {
+        const element = this.refs.resultImageEle;
+        const {fileList} = this.props;
+        const fileObj = fileList[Math.floor(fileList.length/2)].fileObj;
+        window.cornerstone.enable(element);
+        var index = window.cornerstoneFileImageLoader.addFile(fileObj);
+        var imageId = 'dicomfile://'+index;
+        window.cornerstone.loadImage(imageId).then(function(image: any){
+            window.cornerstone.displayImage(element,image);
+        })
+    }
+    handleDownload() {
+        let link = document.createElement('a');
+        let resultStr = '';
+        // list.forEach(v => {
+        //     resultStr += v.fileName 
+        //         + ' : '
+        //         + v.fileResult.type
+        //         + ', ' 
+        //         + v.fileResult.confidence
+        //         +';\n'; 
+        // })
+        let blob = new Blob([resultStr])
+        link.download = 'result';
+        link.style.display = 'none';
+        link.href = URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    render(){
+        const {fileList,fileResult,stepState} = this.props;
+        const fileObj = fileList[Math.floor(fileList.length/2)];
+        const shortName = fileObj.fileName.length > 10 ? fileObj.fileName.slice(0,2)+'...'+fileObj.fileName.slice(-5) : fileObj.fileName;
+        const resultTypeSty = {backgroundColor: fileResult.bgColor};
+        // const resultTypeSty = {};
+        return (
+            <div className='main_result_list'>
+                <div className='main_list_header'>DIAGNOSIS RESULTS</div>
+                <div className='main_result_header'>
+                    <span className='result_header_image'>CT IMAGE</span>
+                    <span>TYPE</span>
+                    <span className='result_header_confidence'>CONFIDENCE</span>
+                </div>
+                <div className='main_result_content'>
+                    <div className='image_item'>
+                        <div className='image_preview'
+                            ref='resultImageEle' />
+                        <p>Image {shortName} </p>
+                    </div>
+                    <span className='type_info' style={resultTypeSty}>{fileResult.type}</span>
+                    <span className='confidence_info'>{fileResult.confidence}</span>
+                </div>
+                <div className='main_result_download'></div>
+            </div>
+        )
+    }
+}
 class MainPage extends Component<IProps,IStates>{
-    // public fileInput: React.RefObject<HTMLInputElement>;
     constructor(props: IProps) {
         super(props);
-        const list: IPic[] = [];
         this.state = {
-            picList: list,
-            uploadedPer: 100,
-            analysisF: false,
+            // picList: list,
+            uploadedPer: 0,
+            // analysisF: false,
             isUploading: false
         }
-        this.listChange = this.listChange.bind(this);
-        this.picUploadFn = this.picUploadFn.bind(this);
+        // this.listChange = this.listChange.bind(this);
+        // this.picUploadFn = this.picUploadFn.bind(this);
+        this.clearRedirect = this.clearRedirect.bind(this);
         this.picAnalysis = this.picAnalysis.bind(this);
     }
 
-    listChange(list: IPic[]) {
-        this.setState({
-            picList: list
-        });
+    clearRedirect() {
+        this.props.clearAll();
+        this.props.goto('/');
     }
+    // listChange(list: IPic[]) {
+    //     this.setState({
+    //         picList: list
+    //     });
+    // }
 
-    picUploadFn(value: any) {
-        const list = fileHandle(value);
-        this.listChange(list);
-    }
+    // picUploadFn(value: any) {
+    //     const list = fileHandle(value);
+    //     this.listChange(list);
+    // }
 
     picAnalysis() {
         this.setState({
-            analysisF: true,
+            // analysisF: true,
             isUploading: true
         });
-        console.log(this.state.picList);
+        this.props.startAnalysis();
+        // console.log(this.state.picList);
         let param = new FormData();
-        this.state.picList.forEach(item => {
+        this.props.fileList.forEach(item => {
             param.append('dicoms', item.fileObj);
         });
-        let config = {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        };
-        axios.post('http://www.elongevity.ai/api/predict', param, config).then(response => {
-            console.log(response);
-        }).catch(error => {
-            console.log(error);
+        axios({
+            method: 'POST',
+            baseURL: BASE_URL,
+            url: 'predict',
+            headers: {'Content-Type': 'multipart/form-data'},
+            data: param,
+            onUploadProgress: (progressEvent) => {
+                this.setState({
+                    uploadedPer: (progressEvent.loaded/progressEvent.total)*100
+                });
+            }
+        }).then(res => {
+            // console.log(res);
+            let fileResult = resFileHandle(res.data.type);
+            this.props.setFileResult(fileResult);
+        }).catch(err => {
+            console.error(err);
         }).finally(() => {
             this.setState({
-                isUploading: false
-            });
+                isUploading: false,
+                uploadedPer: 0
+            })
         })
+        // axios.post('http://www.elongevity.ai/api/predict', param, config).then(response => {
+        //     console.log(response);
+        // }).catch(error => {
+        //     console.log(error);
+        // }).finally(() => {
+        //     this.setState({
+        //         isUploading: false,
+        //         uploadedPer: 0
+        //     });
+        // })
     }
 
     render() {
-        // let wrappedComponent = null;
-        // const { analysisF, picList, uploadedPer, isUploading }= this.state;
-        // const list: IPic[] = [];
-        // for (let i=0; i<20; i++) {
-        //     list.push({
-        //         fileName: i+'.jpg',
-        //         fileSize: 0.02,
-        //         fileObject: null,
-        //         fileResult: null
-        //     })
-        // }
-        // let wrappedComponent = <ImageList list={list} disable={false} listFn={this.listChange}/> ;
-        // if ( picList.length === 0) { wrappedComponent = UploadBtn(this.picUploadFn); }
-        // else if ( uploadedPer !== 100) { wrappedComponent = ProgressBar('Uploading...', uploadedPer); }
-        // else { wrappedComponent = <ImageList list={picList} disable={analysisF} listFn={this.listChange} />; }
-        // 集中上传展示上传动画
-        // if (isUploading) wrappedComponent = ProgressBar('Uploading...', uploadedPer);
-        // const startBtnSty = this.state.picList.length === 0 ? 'main_start_btn disable' : 'main_start_btn';
+        const { fileList,fileResult,stepState, uploadMore } = this.props;
+        const { isUploading,uploadedPer } = this.state;
+        const analysisBtnSt = stepState === 'get-result' ? 'New Diagnosis' : 'START Diagnosis';
         return (
             <div className='main'>
                 <MainHeader />
-                {mainPicList(this.props.fileList)}
-                {/* <MainInfo /> */}
-                {/* {MainDialog(wrappedComponent)}
-                <span className='dialog_info'>* Maximum: 50 images</span>
-                <div className='main_start_area'>
-                    <button className={ startBtnSty }
-                        onClick={this.picAnalysis}
-                    >Start Analysis</button>
+                <div className='main_list'>
+                    <div className='main_list_header'>UPLOAD CT IMAGES</div>
+                    <ImageList list={fileList} listFn={() => {return;}} disable={false}/>
+                    {isUploading ? mainUploadingProcess(uploadedPer) : mainOperation(fileList, uploadMore, this.clearRedirect, this.picAnalysis, analysisBtnSt)}
                 </div>
-                {/* {AnalysisPart(picList, 'render-result',50)} */}
-                {/* <MainFooter /> */} 
-                <Footer />
+                {stepState !== 'get-result' ? null :
+                <MainResult fileList={fileList} 
+                    fileResult={fileResult} 
+                    stepState={stepState}/>}
+                <Footer footerClass='main_footer' />
             </div>
         )
     }
 }
 function mapStateToProps (state: IStoreState) {
     return {
-        fileList: state.welcome.fileList
+        fileList: state.welcome.fileList,
+        fileResult: state.welcome.fileResult,
+        stepState: state.welcome.uploadState
     }
 }
 function mapDispatchToProps (dispatch: Dispatch<any>) {
     return {
-        uploaderMore: (v: IPic) => dispatch(welcomeReducer.actionCreator(welcomeReducer.UPLOAD_MORE, v)),
-        clearAll: () => dispatch(welcomeReducer.actionCreator(welcomeReducer.CLEAR_ALL))
+        startAnalysis: () => dispatch(welcomeReducer.actionCreator(welcomeReducer.START_ANALYSIS)),
+        uploadMore: (v: IPic) => dispatch(welcomeReducer.actionCreator(welcomeReducer.UPLOAD_MORE, v)),
+        setFileResult: (v: IFileResult) => dispatch(welcomeReducer.actionCreator(welcomeReducer.SET_RESULT,v)),
+        clearAll: () => dispatch(welcomeReducer.actionCreator(welcomeReducer.CLEAR_ALL)),
+        goto: (v: string) => dispatch(push(v))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(MainPage);

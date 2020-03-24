@@ -1,10 +1,18 @@
-.footer {
-    position: absolute;
-    bottom: 10px;
+@mixin  footer_common {
     text-align: center;
     width: 100%;
     color: #757575;
     p {
         font-size: 12px;
     }
+}
+.main_footer {
+    @include footer_common();
+    position: relative;
+    margin: 40px 0 10px 0;
+}
+.welcome_footer {
+    @include footer_common();
+    position: absolute;
+    bottom: 10px;
 }

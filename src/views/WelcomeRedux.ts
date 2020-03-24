@@ -20,9 +20,15 @@ export interface IFileItem {
     fileObj: any;
     fileResult: any;
 }
+export interface IFileResult {
+    type: string;
+    confidence: number;
+    bgColor: string;
+}
 export interface IFileState {
     uploadState: string;
     fileList: IFileItem[];
+    fileResult: IFileResult
 }
 // const initialState: IDisplayState = {
 //     isLoginDialog: false,
@@ -30,7 +36,12 @@ export interface IFileState {
 // }
 const initialState: IFileState = {
     uploadState: 'begin',
-    fileList: []
+    fileList: [],
+    fileResult: {
+        type: undefined,
+        confidence: undefined,
+        bgColor: undefined
+    }
 }
 
 export function actionCreator(type: string, payload?: any) {
@@ -48,6 +59,7 @@ export const START_UPLOAD = 'START_UPLOAD';
 export const UPLOAD_MORE = 'UPLOAD_MORE';
 export const CLEAR_ALL = 'CLEAR_ALL';
 export const START_ANALYSIS = 'START_ANALYSIS';
+export const SET_RESULT = 'SET_RESULT';
 
 export function fileReducer (state = initialState, action: any) {
     switch ( action.type ) {
@@ -73,6 +85,13 @@ export function fileReducer (state = initialState, action: any) {
             return {
                 ...state,
                 uploadState: 'start-analysis'
+            }
+        }
+        case 'SET_RESULT': {
+            return {
+                ...state,
+                fileResult: action.payload,
+                uploadState: 'get-result'
             }
         }
         default: return state;

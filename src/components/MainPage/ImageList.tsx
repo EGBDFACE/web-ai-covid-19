@@ -97,7 +97,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
                                 />
                     })}
                 </div>
-                <div className='image_list_operation'>
+                {/* <div className='image_list_operation'>
                     <div className='list_clear_all'
                         onClick= {() => this.handleListChange('clear')}>
                         <i />
@@ -120,7 +120,7 @@ export default class ImageList extends React.Component<IProps, IStates> {
                         <i />
                         <p>Upload More</p>
                     </label>
-                </div>
+                </div> */}
             </div>
         )
     }

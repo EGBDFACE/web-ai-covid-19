@@ -111,7 +111,7 @@ class Welcome extends Component<IProps,IStates> {
             <div className='welcome'>
                 <Nav />
                 <UploadBtn />
-                <Footer />
+                <Footer footerClass='welcome_footer' />
             </div>
         )
     }

@@ -13,5 +13,5 @@ if (process.env.NODE_ENV === 'production') {
     console.error('error in require configureStore');
 }
 
-// configureStore = configureStoreProd;
+configureStore = configureStoreProd;
 export default configureStore;
