@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IPic, fileHandle } from 'src/views/MainPage';
-import './ImageItem.scss';
 
 declare const window: any;
 
@@ -43,10 +42,12 @@ export default class ImageItem extends React.Component<ItemProps> {
         const imageSty = imageObj.fileSelect ? 'image_preview image_preview_select' : 'image_preview' ;
         const shortName = imageObj.fileName.length > 10 ? imageObj.fileName.slice(0,2)+'...'+imageObj.fileName.slice(-5) : imageObj.fileName;
         return (
-            <div className='image_item'>
-                <div className={imageSty} onClick={() => this.handleSelect(index)} ref="imagePreview"></div>
-                <p>Image {shortName} </p>
-                <p>File size: {imageObj.fileSize} MB </p>
+            <div className='image_item_wrap'>
+                <div className='image_item'>
+                    <div className={imageSty} onClick={() => this.handleSelect(index)} ref="imagePreview"></div>
+                    <p className='image_item_name'>Image {shortName} </p>
+                    <p className='image_item_size'>{imageObj.fileSize} MB </p>
+                </div>
             </div>
         );
     }

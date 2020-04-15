@@ -1,7 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const px2rem = require('postcss-plugin-px2rem');
 
+const px2remOpts = {
+    rootValue: 76,
+    minPixelValue: 1
+};
 module.exports = {
     entry: './src/index.tsx',
     output:{
@@ -38,16 +43,25 @@ module.exports = {
                 loader:'source-map-loader'
             },
             {
-                test: /\.scss$/,
+                test: /\.(css|sass|scss)$/,
                 // include:[path.join(__dirname,'./../','src')],
+                // loader: 'style-loader!css-loader!sass-loader!postcss-loader'
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
+                    'style-loader',// 把css-loader输出的CSS交给style-loader处理，转换成通过脚本加载的JavaScript代码；
+                    'css-loader',  // 把sass-loader输出的CSS交给css-loader处理，找出CSS中依赖的资源、压缩CSS等；
+                    'sass-loader', // SCSS源代码会先交给sass-loader把SCSS转换成CSS；
+                    'postcss-loader'
+                    // {loader: 'style-loader'},
+                    // {loader: 'css-loader'},
+                    // {loader: 'sass-loader'},
+                    // {loader: 'px2rem-loader',options: {
+                    //     remUni: 76,
+                    //     remPrecision: 8
+                    // }}
                 ]
             },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -56,12 +70,12 @@ module.exports = {
                 }]
             // }
             },
-            {
-                test:/\.svg$/,
-                use: [{
-                    loader: '@svgr/webpack',
-                }],
-            },
+            // {
+            //     test:/\.svg$/,
+            //     use: [{
+            //         loader: '@svgr/webpack',
+            //     }],
+            // },
             {
                 test:/\.(txt)$/,
                 // test: /\.(json|txt)$/
@@ -80,6 +94,7 @@ module.exports = {
             }
         ]
     },
+    // postcss: [px2rem(px2remOpts)],
     // externals:{
     //     'react':'React',
     //     'react-dom':'ReactDom'
@@ -87,7 +102,8 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({
             template: '!!ejs-loader!./build/index.html'
-        })
+        }),
+        // px2rem(px2remOpts),
     ],
     // node:{
     //     fs: "empty",

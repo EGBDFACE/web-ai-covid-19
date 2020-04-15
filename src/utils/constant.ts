@@ -5,7 +5,8 @@
 // export const BASE_URL = 'http://52.83.100.133:5000/';
 // export const BASE_URL = 'http://www.elongevity.ai/gpuapi/';  
 // export const BASE_URL = 'http://161.189.180.126:5000/';
-export const BASE_URL = 'http://www.ct-covid.ai/api/';
+// export const BASE_URL = 'http://www.ct-covid.ai/api/';
+export const BASE_URL = 'http://www.ai-ct-covid.team/api/';
 export const CANCER_LABEL = [
     'ACC','BLCA','BRCA',
     'CESC','CHOL','COAD',
@@ -28,9 +29,9 @@ export const TYPES = [
 ];
 export const TYPES_COLOR = [
     '#4FC575',
-    '#304F7D',
+    '#E83636',
     '#D9C02B',
-    '#C22727',
+    '#304F7D',
     '#7B1A1A',
     '#4A2929'
 ];

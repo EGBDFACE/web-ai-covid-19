@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 
 export default function Progress(v: number, s: string) {
-    const innerSty = {width: v+'%'};
+    const innerSty = {width: (v<20 ? 20 : v)+'%'};
     // console.log(innerSty);
     return (
         <div className='progress_outer'>

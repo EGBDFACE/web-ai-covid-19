@@ -13,30 +13,23 @@ interface IProps {
     uploadCall?: (v: IFileItem[]) => void;
     goto?: (v: string) => void;
 }
-// function uploadCall(list: any) {
-//     let param = new FormData();
-//     for (let i=0; i<list.length; i++) {
-//         param.append('dicoms', list[`${i}`]);
-//     }
-//     // list.forEach((item:any) => {
-//     //     param.append('dicoms', item)
-//     // }) 
-//     axios({
-//         method: 'POST',
-//         baseURL: BASE_URL,
-//         url: 'predict',
-//         headers: {'Content-Type': 'multipart/form-data'},
-//         data: param
-//     }).then(res => {
-//         console.log(res);
-//     }).catch(err => {
-//         console.error(err);
-//     })
-// }
+const StatementInfo = () => {
+    return (
+        <div className='upload_statement'>
+            <div className='statement__info'>
+                <p lang='en'>DICOM files of CT cases containing PHI and related institution information, as well as DICOM private tags uploaded to this website by users will be automatically encrypted and anonymized, and will not be used in model prediction and analysis.</p>
+            </div>
+            <div className='statement__declaration'>
+                <p lang='en'>* Declaration of study anonymized service:</p>
+            </div>
+        </div>
+    )
+}
 class UploadBtn extends Component<IProps,null>{
     constructor(props: IProps) {
         super(props);
         this.handleUpload = this.handleUpload.bind(this);
+        this.handleDownload = this.handleDownload.bind(this);
     }
     handleUpload(value: any) {
         const list: IFileItem[] = [];
@@ -51,10 +44,23 @@ class UploadBtn extends Component<IProps,null>{
         this.props.uploadCall(list);
         this.props.goto('/main')
     }
+    handleDownload() {
+        var a = document.createElement('a');
+        a.href = './samples.zip';
+        a.download = 'samples.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
     render(){
         let fileInput: React.RefObject<HTMLInputElement> = React.createRef();
         return (
             <div className='welcome_upload_area'>
+                <div className='welcome__download'>
+                    <i className='welcome__download-icon' onClick={this.handleDownload}/>
+                    <p>Download Samples</p>
+                </div>
+                <StatementInfo />
                 <div className='welcome_upload_div'>
                     <input type='file' 
                         name='pic_upload' 

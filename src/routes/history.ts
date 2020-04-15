@@ -8,7 +8,9 @@ const createBrowserHistory = require('history').createBrowserHistory;
  * 内部的跳转方式是通过修改 window.location.href 来实现跳转，
  */
 // export default createBrowserHistory({forceRefresh: true});
-const browserHistory: any = createBrowserHistory();
+const browserHistory: any = createBrowserHistory({
+    basename: '/diagnosis'
+});
 export default browserHistory;
 // export default createHashHistory();
 

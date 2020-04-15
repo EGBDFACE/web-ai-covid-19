@@ -22,7 +22,15 @@ module.exports = merge(commonConfig,{
     mode: 'development',
     devServer:{
         hot: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        proxy: {
+            '/api': {
+                target: 'http://ai-ct-covid.team/',
+                pathRewrite: {'^api': ''},
+                changeOrigin: true, // target 是域名时需要这个参数
+                secure: false // 设置支持 https 协议的代理
+            }
+        }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
