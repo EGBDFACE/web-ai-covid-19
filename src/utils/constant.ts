@@ -6,7 +6,8 @@
 // export const BASE_URL = 'http://www.elongevity.ai/gpuapi/';  
 // export const BASE_URL = 'http://161.189.180.126:5000/';
 // export const BASE_URL = 'http://www.ct-covid.ai/api/';
-export const BASE_URL = 'http://www.ai-ct-covid.team/api/';
+// export const BASE_URL = 'http://www.ai-ct-covid.team/api/';
+export const BASE_URL = 'http://localhost/';
 export const CANCER_LABEL = [
     'ACC','BLCA','BRCA',
     'CESC','CHOL','COAD',

@@ -19,11 +19,11 @@
     }
 }
 .welcome_upload_btn {
-    height: 30Px; 
-    border-radius: 30Px;
+    height: 40Px; 
+    border-radius: 40Px;
     padding: 0 60px;
     font-size: 24px;
-    line-height: 30Px;
+    line-height: 40Px;
     color: #FFFFFF;
     background: #304f7d;
     cursor: pointer;
@@ -66,5 +66,11 @@
     }
 }
 .statement__declaration {
+    width: fit-content;
     font-size: 12px;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    &:hover{
+        color: #304f7d ;
+    }
 }

@@ -26,7 +26,7 @@ class MainOperation extends Component<IProps,IState> {
         const { uploadMore,list,picAnalysis,analysisTip,clearAll } = this.props; 
         return (
             <div className='main_list_operation'>
-                <div className='main_list_clear' 
+                {/* <div className='main_list_clear' 
                     onClick={() => clearAll()}>Clear All</div> 
                 <input type='file'
                     name='list_upload_more'
@@ -37,7 +37,7 @@ class MainOperation extends Component<IProps,IState> {
                 />
                 <label className='main_list_upload_more'
                     htmlFor='list_upload_more'
-                >Upload More</label>
+                >Upload More</label> */}
                 <div className='main_list_analysis_layer'/>
                 <div className={'main_list_analysis'+ (list.length == 0 ?' disable':'') } 
                     onClick={() => picAnalysis()}>{analysisTip}</div>

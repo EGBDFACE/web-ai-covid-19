@@ -50,7 +50,9 @@ function MainHeader () {
     return (
         <div className='main_header'>
             <i/>
-            <h1>AI-COVID-19</h1>
+            {/* <h1>AI-COVID-19</h1> */}
+            {/* <a href='/diagnosis'>AI-CT-COVID-19</a> */}
+            <a href='#/'>AI-CT-COVID-19</a>
             {/* <h1>Online Diagnosis</h1> */}
         </div>
     )

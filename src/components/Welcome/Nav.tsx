@@ -11,7 +11,7 @@ export default function WelcomeNav ()  {
                 <i className='nav_label' />
                 {/* <h1>AI-COVID-19</h1> */}
                 {/* <p>A collaborative online AI engine for precise CT-based COVID-19 diagnosis.</p> */}
-                <h1>Online Diagnosis</h1>
+                <h1>COVID-19 Diagnosis</h1>
                 <p>Online diagnostic interface and AI development interface for AI-CT-COVID-19.</p>
             </div>
             <i className='nav_icon' />

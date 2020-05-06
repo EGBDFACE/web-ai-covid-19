@@ -20,6 +20,7 @@ const commonConfig = require('./webpack.base.config.js');
 module.exports = merge(commonConfig,{
     //entry: './src/index.tsx',
     mode: 'development',
+    devtool:'source-map',
     devServer:{
         hot: true,
         historyApiFallback: true,

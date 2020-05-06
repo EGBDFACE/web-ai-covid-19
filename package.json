@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": ".",
   "scripts": {
     "dev": "webpack-dev-server --color --progress --config ./build/webpack.dev.config.js ",
     "build": "webpack --progress --colors --config ./build/webpack.prod.config.js",

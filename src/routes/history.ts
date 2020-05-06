@@ -1,6 +1,7 @@
 // 自定义解决 history 方案，可以在组件中使用 push 操作等
 // import { createBrowserHistory } from 'history';
 const createBrowserHistory = require('history').createBrowserHistory;
+const createHashHistory = require('history').createHashHistory;
 /**
  * 阅读 history 源码发现 createBrowserHistory 提供了参数 props
  * forceRefresh 默认值为 false，传入 ture 之后可以解决 push 之后
@@ -9,9 +10,12 @@ const createBrowserHistory = require('history').createBrowserHistory;
  */
 // export default createBrowserHistory({forceRefresh: true});
 const browserHistory: any = createBrowserHistory({
-    basename: '/diagnosis'
+    // basename: '/diagnosis'
 });
-export default browserHistory;
+
+// export default browserHistory;
+const hashHistory: any = createHashHistory();
+export default hashHistory;
 // export default createHashHistory();
 
 /**

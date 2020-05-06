@@ -1,4 +1,4 @@
-import React,{ Component, Dispatch } from 'react';
+import React,{ Component, Dispatch, useState } from 'react';
 import { connect } from 'react-redux';
 import './UploadBtn.scss';
 import axios from 'axios';
@@ -14,12 +14,14 @@ interface IProps {
     goto?: (v: string) => void;
 }
 const StatementInfo = () => {
+    // const declearationInfo = 'DICOM files of CT cases containing PHI and related institution information, as well as DICOM private tags uploaded to this website by users will be automatically encrypted and anonymized, and will not be used in model prediction and analysis.';
+    const [show,change] = useState(false);
     return (
         <div className='upload_statement'>
-            <div className='statement__info'>
+            <div className='statement__info' style={show ? null : {display: 'none'}}>
                 <p lang='en'>DICOM files of CT cases containing PHI and related institution information, as well as DICOM private tags uploaded to this website by users will be automatically encrypted and anonymized, and will not be used in model prediction and analysis.</p>
             </div>
-            <div className='statement__declaration'>
+            <div className='statement__declaration' onMouseEnter={()=>change(true)} onMouseLeave={()=>change(false)}/*title={declearationInfo}*/>
                 <p lang='en'>* Declaration of study anonymized service:</p>
             </div>
         </div>

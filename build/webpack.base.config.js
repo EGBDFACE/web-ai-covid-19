@@ -17,9 +17,6 @@ module.exports = {
         // libraryTarget: 'umd'
         // publicPath: '/dist/'
     },
-    devtool:'source-map',
-    // devtool: 'cheap-module-eval-source-map', //dev
-    // devtool:'cheap-module-source-map', //prod 
     resolve:{
         extensions:['.ts','.tsx','.js','.json'],
         alias: {
